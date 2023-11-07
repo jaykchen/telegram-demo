@@ -46,7 +46,7 @@ Wind Speed: {} km/h"#,
         serde_json::json!(_forecast),
         Some(Expire {
             kind: ExpireKind::Ex,
-            value: 60,
+            value: 300,
         }),
     );
     listen_to_update(telegram_token).await;
