@@ -80,9 +80,15 @@ async fn handler(update: Update) {
             _ = tele.send_message(chat_id, &help_mesg);
         } else if text.eq_ignore_ascii_case("/weather") {
             let _forecast = match get("_forecast") {
-                Some(v) => v.as_str().unwrap_or("Invalid data").to_string(),
+                Some(val) => match serde_json::from_value::<String>(val) {
+                    Ok(v) => v,
+                    Err(_) => String::from("Invalid data"),
+                },
                 None => String::from("no forecast data"),
             };
+            // let _forecast = get("Toronto")
+            //     .and_then(|val| serde_json::from_value(val).ok())
+            //     .unwrap_or_else("no forecast data");
 
             _ = tele.send_message(chat_id, &_forecast);
         } else if text.eq_ignore_ascii_case("/start") {
