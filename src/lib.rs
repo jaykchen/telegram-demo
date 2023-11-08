@@ -79,7 +79,7 @@ async fn handler(update: Update) {
         if text.eq_ignore_ascii_case("/help") {
             _ = tele.send_message(chat_id, &help_mesg);
         } else if text.eq_ignore_ascii_case("/weather") {
-            let _forecast = match get("_forecast") {
+            let _weather = match get("_weather") {
                 Some(val) => match serde_json::from_value::<String>(val) {
                     Ok(v) => v,
                     Err(_) => String::from("Invalid data"),
@@ -90,7 +90,7 @@ async fn handler(update: Update) {
             //     .and_then(|val| serde_json::from_value(val).ok())
             //     .unwrap_or_else("no forecast data");
 
-            _ = tele.send_message(chat_id, &_forecast);
+            _ = tele.send_message(chat_id, &_weather);
         } else if text.eq_ignore_ascii_case("/start") {
             _ = tele.send_message(chat_id, &help_mesg);
             set(&chat_id.to_string(), json!(true), None);
